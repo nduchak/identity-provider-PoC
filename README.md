@@ -20,4 +20,4 @@ const NODE_INTERNAL_URL = 'https://sdk-tesnet.aepps.com'
 
 3) You need to build and install extension(check extension README)
 4) You need to build and run Aepp(check aepp README)
-5) Go to l`ocalhost:9001`
+5) Go to `localhost:9001`
