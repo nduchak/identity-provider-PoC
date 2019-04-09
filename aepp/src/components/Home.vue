@@ -97,9 +97,11 @@
 <script>
 //  is a webpack alias present in webpack.config.js
 import Aepp from '@aeternity/aepp-sdk/es/ae/aepp'
+import ContractCompilerAPI from '@aeternity/aepp-sdk/es/contract/compiler'
 
-const NODE_URL = 'https://sdk-tesnet.aepps.com'
-const NODE_INTERNAL_URL = 'https://sdk-tesnet.aepps.com'
+const NODE_URL = 'http://localhost:3013'
+const NODE_INTERNAL_URL = 'http://localhost:3113'
+const COMPILER_URL = 'https://compiler.aepps.com'
 
 export default {
   name: 'Home',
@@ -117,7 +119,7 @@ export default {
   type state = ()
   function main(x : int) = x`,
       byteCode: null,
-      contractInitState: '()',
+      contractInitState: [],
       deployInfo: null
     }
   },
@@ -128,7 +130,9 @@ export default {
     async compile (code) {
       console.log(`Compiling contract...`)
       try {
-        return await this.client.contractCompile(code)
+        // this.code = code
+        // return await this.client.contractCompile(code)
+        console.log(await this.client.spend(100, (await this.client.address())))
       } catch (err) {
         this.compileError = err
         console.error(err)
@@ -137,19 +141,19 @@ export default {
     async deploy (code, options = {}) {
       console.log(`Deploying contract...`)
       try {
-        return await this.client.contractDeploy(this.byteCode, this.abi, { initState: this.contractInitState, options })
+        return await this.client.contractDeploy(this.byteCode, this.source, this.contractInitState, options)
       } catch (err) {
         this.deployErr = err
         console.error(err)
       }
     },
-    async call (code, abi, contractAddress, method = 'main', returnType = 'int', args = '(5)', options = {}) {
-      console.log(`Deploying contract...`)
+    async call (code, abi, contractAddress, method = 'main', returnType = 'int', args = ['5'], options = {}) {
+      console.log(`Calling contract...`)
       try {
-        const { result } = await this.client.contractCall(this.byteCode, this.abi, this.deployInfo.address, method, { args: args, options })
+        const result = await this.client.contractCall(this.source, this.deployInfo.address, method, args, options)
         return Object.assign(
           result,
-          { decodedRes: await this.client.contractDecodeData(returnType, result.returnValue) }
+          { decodedRes: await result.decode(returnType) }
         )
       } catch (err) {
         this.deployErr = err
@@ -159,7 +163,7 @@ export default {
     onCompile () {
       this.compile(this.contractCode)
         .then(byteCodeObj => {
-          this.byteCode = byteCodeObj.bytecode
+          this.byteCode = this.bytecode
         })
     },
     onDeploy () {
@@ -177,9 +181,10 @@ export default {
     }
   },
   created () {
-    Aepp({
+    Aepp.compose(ContractCompilerAPI)({
       url: NODE_URL,
       internalUrl: NODE_INTERNAL_URL,
+      compilerUrl: COMPILER_URL,
       onWalletChange: (params) => {
         this.pub = params.address
       },

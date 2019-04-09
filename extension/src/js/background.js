@@ -70,6 +70,10 @@ ExtensionProvider({
     onSign: function ({sdkId, tx, txObject, sign}) {
         // sendDataToPopup(this.getSdks())
         if (confirm('Do you want to sign ' + JSON.stringify(txObject) + ' ?')) sign() // SIGN TX
+    },
+    // Hook for broadcasting transaction result
+    onBroadcast: function (sdk) {
+        console.log(sdk)
     }
 }).then(provider => {
     // Subscribe from postMessages from page
