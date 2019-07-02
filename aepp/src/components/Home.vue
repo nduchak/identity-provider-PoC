@@ -5,7 +5,8 @@
     <div class="border">
       <div class="bg-green w-full flex flex-row font-mono border border-b">
         <div class="p-2 w-1/4">
-          Public Key <small>(from extension Identity)</small>
+          Public Key
+          <small>(from extension Identity)</small>
         </div>
         <div v-if="pub" class="p-2 w-3/4 bg-grey-lightest break-words">
           {{pub}}
@@ -43,10 +44,12 @@
           Contract Code
         </div>
         <div class="p-2 w-3/4 bg-white">
-          <textarea class="bg-black text-white border-b border-black p-2 w-full h-64" v-model='contractCode' placeholder="contact code"/>
+          <textarea class="bg-black text-white border-b border-black p-2 w-full h-64" v-model='contractCode'
+                    placeholder="contact code"/>
         </div>
       </div>
-      <button v-if="client" class="w-32 rounded rounded-full bg-purple text-white py-2 px-4 pin-r mr-8 mt-4 text-xs" @click='onCompile'>
+      <button v-if="client" class="w-32 rounded rounded-full bg-purple text-white py-2 px-4 pin-r mr-8 mt-4 text-xs"
+              @click='onCompile'>
         Compile
       </button>
     </div>
@@ -61,7 +64,8 @@
         </div>
       </div>
     </div>
-    <button v-if="byteCode" class="w-32 rounded rounded-full bg-purple text-white py-2 px-4 pin-r mr-8 mt-4 text-xs" @click='onDeploy'>
+    <button v-if="byteCode" class="w-32 rounded rounded-full bg-purple text-white py-2 px-4 pin-r mr-8 mt-4 text-xs"
+            @click='onDeploy'>
       Deploy
     </button>
 
@@ -75,7 +79,8 @@
         </div>
       </div>
     </div>
-    <button v-if="deployInfo" class="w-32 rounded rounded-full bg-purple text-white py-2 px-4 pin-r mr-8 mt-4 text-xs" @click='onCall'>
+    <button v-if="deployInfo" class="w-32 rounded rounded-full bg-purple text-white py-2 px-4 pin-r mr-8 mt-4 text-xs"
+            @click='onCall'>
       Call
     </button>
 
@@ -95,109 +100,113 @@
 </template>
 
 <script>
-//  is a webpack alias present in webpack.config.js
-import Aepp from '@aeternity/aepp-sdk/es/ae/aepp'
-import ContractCompilerAPI from '@aeternity/aepp-sdk/es/contract/compiler'
+  //  is a webpack alias present in webpack.config.js
+  import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/wallet-connection/browser-runtime'
+  import ExtWalletDetector from '@aeternity/aepp-sdk/es/utils/wallet-detector'
 
-const NODE_URL = 'http://localhost:3013'
-const NODE_INTERNAL_URL = 'http://localhost:3113'
-const COMPILER_URL = 'https://compiler.aepps.com'
+  const NODE_URL = 'http://localhost:3013'
+  const NODE_INTERNAL_URL = 'http://localhost:3113'
+  const COMPILER_URL = 'https://compiler.aepps.com'
 
-export default {
-  name: 'Home',
-  components: {},
-  data () {
-    return {
-      client: null,
-      abi: 'sophia',
-      to: null,
-      amount: null,
-      height: null,
-      pub: null,
-      callResult: null,
-      contractCode: `contract Identity =
+  export default {
+    name: 'Home',
+    components: {},
+    data() {
+      return {
+        client: null,
+        abi: 'sophia',
+        to: null,
+        amount: null,
+        height: null,
+        pub: null,
+        callResult: null,
+        contractCode: `contract Identity =
   type state = ()
   function main(x : int) = x`,
-      byteCode: null,
-      contractInitState: [],
-      deployInfo: null
-    }
-  },
-  computed: {
-  },
-  methods: {
-    send () {},
-    async compile (code) {
-      console.log(`Compiling contract...`)
-      try {
-        // this.code = code
-        // return await this.client.contractCompile(code)
-        console.log(await this.client.spend(100, (await this.client.address())))
-      } catch (err) {
-        this.compileError = err
-        console.error(err)
+        byteCode: null,
+        contractInitState: [],
+        deployInfo: null
       }
     },
-    async deploy (code, options = {}) {
-      console.log(`Deploying contract...`)
-      try {
-        return await this.client.contractDeploy(this.byteCode, this.source, this.contractInitState, options)
-      } catch (err) {
-        this.deployErr = err
-        console.error(err)
-      }
-    },
-    async call (code, abi, contractAddress, method = 'main', returnType = 'int', args = ['5'], options = {}) {
-      console.log(`Calling contract...`)
-      try {
-        const result = await this.client.contractCall(this.source, this.deployInfo.address, method, args, options)
-        return Object.assign(
-          result,
-          { decodedRes: await result.decode(returnType) }
-        )
-      } catch (err) {
-        this.deployErr = err
-        console.error(err)
-      }
-    },
-    onCompile () {
-      this.compile(this.contractCode)
-        .then(byteCodeObj => {
-          this.byteCode = this.bytecode
-        })
-    },
-    onDeploy () {
-      this.deploy(this.byteCode)
-        .then(deployedContract => {
-          this.deployInfo = deployedContract
-        })
-    },
-    onCall () {
-      this.call(this.byteCode)
-        .then(callRes => {
-          console.log(callRes)
-          this.callResult = callRes
-        })
-    }
-  },
-  created () {
-    Aepp.compose(ContractCompilerAPI)({
-      url: NODE_URL,
-      internalUrl: NODE_INTERNAL_URL,
-      compilerUrl: COMPILER_URL,
-      onWalletChange: (params) => {
-        this.pub = params.address
+    computed: {},
+    methods: {
+      send() {
       },
-      onRegister: (identity) => {
-        if (confirm(`Do you want to register this identity provider ${identity.providerId}???`)) {
-          identity.registerProvider() // REGISTER PROVIDER
+      async compile(code) {
+        console.log(`Compiling contract...`)
+        try {
+          // this.code = code
+          // return await this.client.contractCompile(code)
+          console.log(await this.client.spend(100, (await this.client.address())))
+        } catch (err) {
+          this.compileError = err
+          console.error(err)
         }
+      },
+      async deploy(code, options = {}) {
+        console.log(`Deploying contract...`)
+        try {
+          return await this.client.contractDeploy(this.byteCode, this.source, this.contractInitState, options)
+        } catch (err) {
+          this.deployErr = err
+          console.error(err)
+        }
+      },
+      async call(code, abi, contractAddress, method = 'main', returnType = 'int', args = ['5'], options = {}) {
+        console.log(`Calling contract...`)
+        try {
+          const result = await this.client.contractCall(this.source, this.deployInfo.address, method, args, options)
+          return Object.assign(
+            result,
+            {decodedRes: await result.decode(returnType)}
+          )
+        } catch (err) {
+          this.deployErr = err
+          console.error(err)
+        }
+      },
+      onCompile() {
+        this.compile(this.contractCode)
+          .then(byteCodeObj => {
+            this.byteCode = this.bytecode
+          })
+      },
+      onDeploy() {
+        this.deploy(this.byteCode)
+          .then(deployedContract => {
+            this.deployInfo = deployedContract
+          })
+      },
+      onCall() {
+        this.call(this.byteCode)
+          .then(callRes => {
+            console.log(callRes)
+            this.callResult = callRes
+          })
       }
-    }).then(ae => {
-      this.client = ae
-    })
+    },
+    async created() {
+      const detector = await ExtWalletDetector()
+      detector.scan(async ({ wallets, newWallet }) => {
+        if (wallet.id === 'chkpmppikmfpmijepmbgdkphhiegbkfp') {
+          const connection = await wallet.getConnection()
+          connection.connect(
+            (data) => {
+              console.log(data)
+              // connection.sendMessage(' From AEPP, disconnected!!!')
+              // connection.disconnect()
+            },
+            (sender) => {
+              console.log('Aepp disconnected')
+            }
+          )
+          // connection.disconnect()
+          // connection.sendMessage(" From AEPP, so you want to disconnect ")
+        }
+      })
+    }
+
   }
-}
 </script>
 
 <style scoped lang="css">

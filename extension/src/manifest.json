@@ -1,5 +1,5 @@
 {
-  "name": "My (Not So) Secure AE Wallet",
+  "name": "Waellet",
   "options_page": "options.html",
   "background": {
     "persistent": false,
@@ -19,6 +19,10 @@
     "notifications",
     "https://*/*"
   ],
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["http://localhost/*"]
+  },
   "content_scripts": [
     {
       "matches": [

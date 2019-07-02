@@ -47,43 +47,58 @@ const accounts = [
     // })(),
     account
 ]
-
+//
 const postToContent = (data) => {
     chrome.tabs.query({}, function (tabs) { // TODO think about direct communication with tab
         const message = { method: 'pageMessage', data };
         tabs.forEach(({ id }) => chrome.tabs.sendMessage(id, message)) // Send message to all tabs
     });
 }
+// chrome.runtime.onConnectExternal.addListener((a) => {
+//     a.onMessage.addListener((message,sender) => {
+//         console.log(message)
+//         if (message === ' From AEPP, so you want to disconnect ') {
+//             a.postMessage('From Wallet, disconnect me please.')
+//         }
+//     })
+//     a.onDisconnect.addListener((sender) => {
+//         console.log('Disconnected')
+//     })
+// })
+setInterval(() => postToContent({ type: 'ready', data: { id: chrome.runtime.id, name: 'My Wallet'}}), 5000)
+// chrome.runtime.onMessageExternal.addListener((a,b,c,d) => {
+//     debugger
+// })
 
-// Init extension stamp from sdk
-ExtensionProvider({
-    // Provide post function (default: window.postMessage)
-    postFunction: postToContent,
-    // By default `ExtesionProvider` use first account as default account. You can change active account using `selectAccount (address)` function
-    accounts: accounts,
-    // Hook for sdk registration
-    onSdkRegister: function (sdk) {
-        // sendDataToPopup(this.getSdks())
-        if (confirm('Do you want to share wallet with sdk ' + sdk.sdkId)) sdk.shareWallet() // SHARE WALLET WITH SDK
-    },
-    // Hook for signing transaction
-    onSign: function ({sdkId, tx, txObject, sign}) {
-        // sendDataToPopup(this.getSdks())
-        if (confirm('Do you want to sign ' + JSON.stringify(txObject) + ' ?')) sign() // SIGN TX
-    },
-    // Hook for broadcasting transaction result
-    onBroadcast: function (sdk) {
-        console.log(sdk)
-    }
-}).then(provider => {
-    // Subscribe from postMessages from page
-    chrome.runtime.onMessage.addListener((msg, sender) => {
-        switch (msg.method) {
-            case 'pageMessage':
-                provider.processMessage(msg);
-                break
-        }
-    })
-}).catch(err => {
-    console.error(err)
-})
+// // Init extension stamp from sdk
+// ExtensionProvider({
+//     // Provide post function (default: window.postMessage)
+//     postFunction: postToContent,
+//     // By default `ExtesionProvider` use first account as default account. You can change active account using `selectAccount (address)` function
+//     accounts: accounts,
+//     // Hook for sdk registration
+//     onSdkRegister: function (sdk) {
+//         // sendDataToPopup(this.getSdks())
+//         if (confirm('Do you want to share wallet with sdk ' + sdk.sdkId)) sdk.shareWallet() // SHARE WALLET WITH SDK
+//     },
+//     // Hook for signing transaction
+//     onSign: function ({sdkId, tx, txObject, sign}) {
+//         // sendDataToPopup(this.getSdks())
+//         if (confirm('Do you want to sign ' + JSON.stringify(txObject) + ' ?')) sign() // SIGN TX
+//     },
+//     // Hook for broadcasting transaction result
+//     onBroadcast: function (sdk) {
+//         console.log(sdk)
+//     }
+// }).then(provider => {
+//     // Subscribe from postMessages from page
+//     chrome.runtime.onMessage.addListener((msg, sender) => {
+//         switch (msg.method) {
+//             case 'pageMessage':
+//                 provider.processMessage(msg);
+//                 break
+//         }
+//     })
+// }).catch(err => {
+//     console.error(err)
+// })

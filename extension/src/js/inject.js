@@ -3,7 +3,7 @@ const readyStateCheckInterval = setInterval(function () {
     if (document.readyState === "complete") {
         clearInterval(readyStateCheckInterval)
 
-        window.addEventListener("message", ({data}) => {
+        window.addEventListener("message", ({ data} ) => {
             // Handle message from page and redirect to background script
             chrome.runtime.sendMessage({ method: 'pageMessage', data })
         }, false)
