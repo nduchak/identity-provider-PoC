@@ -101,11 +101,11 @@
 
 <script>
   //  is a webpack alias present in webpack.config.js
-  import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/wallet-connection/browser-runtime'
+  import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-runtime'
   import ExtWalletDetector from '@aeternity/aepp-sdk/es/utils/wallet-detector'
 
-  const NODE_URL = 'http://localhost:3013'
-  const NODE_INTERNAL_URL = 'http://localhost:3113'
+  const NODE_URL = 'https://sdk-tesnet.aepps.com'
+  const NODE_INTERNAL_URL = 'https://sdk-tesnet.aepps.com'
   const COMPILER_URL = 'https://compiler.aepps.com'
 
   export default {
