@@ -2,8 +2,8 @@ import '../img/icon-128.png'
 import '../img/icon-34.png'
 
 import MemoryAccount from '@aeternity/aepp-sdk/es/account/memory'
-import Account from '@aeternity/aepp-sdk/es/account'
-import ExtensionProvider from '@aeternity/aepp-sdk/es/provider/extension'
+import Wallet from '@aeternity/aepp-sdk/es/wallet'
+import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-runtime'
 
 
 const account =  MemoryAccount({
@@ -45,7 +45,7 @@ const accounts = [
     //         }
     //     }
     // })(),
-    account
+    // account
 ]
 //
 const postToContent = (data) => {
@@ -54,51 +54,49 @@ const postToContent = (data) => {
         tabs.forEach(({ id }) => chrome.tabs.sendMessage(id, message)) // Send message to all tabs
     });
 }
-// chrome.runtime.onConnectExternal.addListener((a) => {
-//     a.onMessage.addListener((message,sender) => {
-//         console.log(message)
-//         if (message === ' From AEPP, so you want to disconnect ') {
-//             a.postMessage('From Wallet, disconnect me please.')
-//         }
-//     })
-//     a.onDisconnect.addListener((sender) => {
-//         console.log('Disconnected')
-//     })
-// })
-setInterval(() => postToContent({ type: 'ready', data: { id: chrome.runtime.id, name: 'My Wallet'}}), 5000)
-// chrome.runtime.onMessageExternal.addListener((a,b,c,d) => {
-//     debugger
-// })
 
+// const NODE_URL = 'http://localhost:3013'
+// const NODE_INTERNAL_URL = 'http://localhost:3113'
+// const COMPILER_URL = 'https://compiler.aepps.com'
+//
 // // Init extension stamp from sdk
-// ExtensionProvider({
-//     // Provide post function (default: window.postMessage)
-//     postFunction: postToContent,
+// Wallet({
+//     url: NODE_URL,
+//     internalUrl: NODE_INTERNAL_URL,
+//     compilerUrl: COMPILER_URL,
 //     // By default `ExtesionProvider` use first account as default account. You can change active account using `selectAccount (address)` function
-//     accounts: accounts,
+//     accounts: [],
 //     // Hook for sdk registration
-//     onSdkRegister: function (sdk) {
-//         // sendDataToPopup(this.getSdks())
-//         if (confirm('Do you want to share wallet with sdk ' + sdk.sdkId)) sdk.shareWallet() // SHARE WALLET WITH SDK
+//     onConnection (client) {
+//         debugger
 //     },
-//     // Hook for signing transaction
-//     onSign: function ({sdkId, tx, txObject, sign}) {
-//         // sendDataToPopup(this.getSdks())
-//         if (confirm('Do you want to sign ' + JSON.stringify(txObject) + ' ?')) sign() // SIGN TX
-//     },
-//     // Hook for broadcasting transaction result
-//     onBroadcast: function (sdk) {
-//         console.log(sdk)
+//     onDisconnect (port) {
+//         debugger
 //     }
 // }).then(provider => {
-//     // Subscribe from postMessages from page
-//     chrome.runtime.onMessage.addListener((msg, sender) => {
-//         switch (msg.method) {
-//             case 'pageMessage':
-//                 provider.processMessage(msg);
-//                 break
-//         }
-//     })
+//     debugger
+//     provider.sendWalletInfo(postToContent)
 // }).catch(err => {
+//     debugger
 //     console.error(err)
 // })
+// Subscribe for runtime connection
+
+// Send wallet connection info to Aepp throug content script
+setInterval(() => postToContent({ method: 'wallet.await.connection', params: { name: 'TestWAELLET', id: 'chkpmppikmfpmijepmbgdkphhiegbkfp', network: 'mainnet' }}), 1000)
+
+chrome.runtime.onConnectExternal.addListener(async (port) => {
+    const connection = await BrowserWindowMessageConnection({ connectionInfo: { id: port.sender.frameId }, port })
+    connection.connect(
+        (message, sender) => {
+            console.log('------MSG')
+            console.log(sender)
+            console.log(message)
+            console.log('------MSG-end')
+        },
+        (conn) => {
+            console.log('Disconnect ' + conn.connectionInfo.id)
+        })
+    connection.sendMessage('hello from wallet')
+    setTimeout(() => connection.disconnect(), 2000)
+})

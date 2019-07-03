@@ -101,8 +101,9 @@
 
 <script>
   //  is a webpack alias present in webpack.config.js
+  import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-window-message'
   import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-runtime'
-  import ExtWalletDetector from '@aeternity/aepp-sdk/es/utils/wallet-detector'
+  import ExtWalletDetector from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-detector'
 
   const NODE_URL = 'https://sdk-tesnet.aepps.com'
   const NODE_INTERNAL_URL = 'https://sdk-tesnet.aepps.com'
@@ -186,22 +187,24 @@
       }
     },
     async created() {
-      const detector = await ExtWalletDetector()
+      const detector = await ExtWalletDetector({ connection: await BrowserWindowMessageConnection({ connectionInfo: { id: 'spy' }}) })
+
       detector.scan(async ({ wallets, newWallet }) => {
-        if (wallet.id === 'chkpmppikmfpmijepmbgdkphhiegbkfp') {
-          const connection = await wallet.getConnection()
+        if (newWallet.id === 'chkpmppikmfpmijepmbgdkphhiegbkfp') {
+          const connection = await newWallet.getConnection()
+          detector.stopScan()
           connection.connect(
-            (data) => {
-              console.log(data)
-              // connection.sendMessage(' From AEPP, disconnected!!!')
-              // connection.disconnect()
-            },
-            (sender) => {
-              console.log('Aepp disconnected')
-            }
-          )
-          // connection.disconnect()
-          // connection.sendMessage(" From AEPP, so you want to disconnect ")
+            (msg, sender) => {
+              console.log('------MSG')
+              console.log(sender)
+              console.log(msg)
+              console.log('------MSG-end')
+            }, // onMSg
+            (conn) => {
+              console.log('Disconnect ' + conn.connectionInfo.id)
+            }) // onDisconnect
+          connection.sendMessage('hello from aepp')
+          setTimeout(() => connection.disconnect(), 2000)
         }
       })
     }
