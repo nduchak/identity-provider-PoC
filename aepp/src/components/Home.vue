@@ -203,8 +203,10 @@
             (conn) => {
               console.log('Disconnect ' + conn.connectionInfo.id)
             }) // onDisconnect
-          connection.sendMessage('hello from aepp')
-          setTimeout(() => connection.disconnect(), 2000)
+          const name = 'MyAepp'
+          const version = 1
+          const network = 'mainnet'
+          connection.sendMessage({ id: 1, method: 'aepp.request.connect', params: { name, version, network }})
         }
       })
     }
