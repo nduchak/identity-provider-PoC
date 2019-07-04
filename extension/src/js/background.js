@@ -3,7 +3,7 @@ import '../img/icon-34.png'
 
 import MemoryAccount from '@aeternity/aepp-sdk/es/account/memory'
 import Wallet from '@aeternity/aepp-sdk/es/wallet'
-import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-runtime'
+import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-runtime'
 
 
 const account =  MemoryAccount({
@@ -86,7 +86,7 @@ const postToContent = (data) => {
 setInterval(() => postToContent({ method: 'wallet.await.connection', params: { name: 'TestWAELLET', id: 'chkpmppikmfpmijepmbgdkphhiegbkfp', network: 'mainnet' }}), 1000)
 
 chrome.runtime.onConnectExternal.addListener(async (port) => {
-    const connection = await BrowserWindowMessageConnection({ connectionInfo: { id: port.sender.frameId }, port })
+    const connection = await BrowserRuntimeConnection({ connectionInfo: { id: port.sender.frameId }, port })
     connection.connect(
         (message, sender) => {
             console.log('------MSG')
