@@ -102,7 +102,6 @@
 <script>
   //  is a webpack alias present in webpack.config.js
   import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-window-message'
-  import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-runtime'
   import ExtWalletDetector from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-detector'
 
   const NODE_URL = 'https://sdk-tesnet.aepps.com'
@@ -199,6 +198,11 @@
               console.log(sender)
               console.log(msg)
               console.log('------MSG-end')
+              if (msg.id === 1) {
+                //subscribe for accounts
+                connection.sendMessage({ id: 2, method: 'aepp.subscribe.address', params: { type: 'subscribe', value: 'current' }})
+                // TODO sign TX
+              }
             }, // onMSg
             (conn) => {
               console.log('Disconnect ' + conn.connectionInfo.id)
