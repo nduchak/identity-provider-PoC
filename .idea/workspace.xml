@@ -4,7 +4,6 @@
     <list default="true" id="3d901e3e-2a02-4918-b8cf-42156a04a345" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aepp/src/components/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/aepp/src/components/Home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extension/src/js/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/extension/src/js/background.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -18,14 +17,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/aepp/src/components/Home.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="208" column="71" selection-start-line="208" selection-start-column="71" selection-end-line="208" selection-end-column="71" />
+            <state relative-caret-position="1289">
+              <caret line="217" column="18" selection-start-line="217" selection-start-column="18" selection-end-line="217" selection-end-column="18" />
               <folding>
                 <element signature="e#3356#3496#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/aepp/node_modules/@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-window-message.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="640">
+              <caret line="63" column="13" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -39,14 +47,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/extension/src/js/background.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="63" column="49" selection-start-line="63" selection-start-column="49" selection-end-line="63" selection-end-column="49" />
+            <state relative-caret-position="183">
+              <caret line="59" selection-start-line="59" selection-end-line="61" selection-end-column="49" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/extension/node_modules/@aeternity/aepp-sdk/es/ae/wallet.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="693">
+              <caret line="129" column="20" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -103,8 +120,8 @@
         <option value="$PROJECT_DIR$/aepp/package.json" />
         <option value="$PROJECT_DIR$/extension/src/manifest.json" />
         <option value="$PROJECT_DIR$/extension/src/js/inject.js" />
-        <option value="$PROJECT_DIR$/aepp/src/components/Home.vue" />
         <option value="$PROJECT_DIR$/extension/src/js/background.js" />
+        <option value="$PROJECT_DIR$/aepp/src/components/Home.vue" />
       </list>
     </option>
   </component>
@@ -189,7 +206,7 @@
       <workItem from="1553089012970" duration="2373000" />
       <workItem from="1554806027361" duration="2864000" />
       <workItem from="1559824400493" duration="839000" />
-      <workItem from="1561554104502" duration="25650000" />
+      <workItem from="1561554104502" duration="31779000" />
     </task>
     <task id="LOCAL-00001" summary="Use `ExtansionProvider` stamp from sdk">
       <created>1552480767242</created>
@@ -338,17 +355,31 @@
       <option name="project" value="LOCAL" />
       <updated>1562230929386</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Finish connection flow for Wallet stamp">
+      <created>1562253168529</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1562253168529</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Add suibscription flow">
+      <created>1562332036266</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1562332036266</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63777000" />
+    <option name="totallyTimeSpent" value="69906000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26495728" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26495728" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -419,7 +450,9 @@
     <MESSAGE value="test" />
     <MESSAGE value="Add example of using Connection and WalletDetector" />
     <MESSAGE value="Fix connection name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix connection name" />
+    <MESSAGE value="Finish connection flow for Wallet stamp" />
+    <MESSAGE value="Add suibscription flow" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add suibscription flow" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/node_modules/@aeternity/aepp-sdk/es/index.js" />
@@ -544,22 +577,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aepp/src/components/Home.vue">
+    <entry file="file://$PROJECT_DIR$/aepp/node_modules/@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-window-message.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="208" column="71" selection-start-line="208" selection-start-column="71" selection-end-line="208" selection-end-column="71" />
-          <folding>
-            <element signature="e#3356#3496#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="640">
+          <caret line="63" column="13" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extension/node_modules/@aeternity/aepp-sdk/es/ae/wallet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="129" column="20" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/extension/src/js/background.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="63" column="49" selection-start-line="63" selection-start-column="49" selection-end-line="63" selection-end-column="49" />
+        <state relative-caret-position="183">
+          <caret line="59" selection-start-line="59" selection-end-line="61" selection-end-column="49" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/aepp/src/components/Home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1289">
+          <caret line="217" column="18" selection-start-line="217" selection-start-column="18" selection-end-line="217" selection-end-column="18" />
+          <folding>
+            <element signature="e#3356#3496#0" expanded="true" />
           </folding>
         </state>
       </provider>

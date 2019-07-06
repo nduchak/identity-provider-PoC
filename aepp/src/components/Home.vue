@@ -103,9 +103,10 @@
   //  is a webpack alias present in webpack.config.js
   import BrowserWindowMessageConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-connection/browser-window-message'
   import ExtWalletDetector from '@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-detector'
+  import { RpcAepp } from '@aeternity/aepp-sdk/es/ae/aepp'
 
-  const NODE_URL = 'https://sdk-tesnet.aepps.com'
-  const NODE_INTERNAL_URL = 'https://sdk-tesnet.aepps.com'
+  const NODE_URL = 'http://localhost:3013'
+  const NODE_INTERNAL_URL = 'http://localhost:3113'
   const COMPILER_URL = 'https://compiler.aepps.com'
 
   export default {
@@ -192,25 +193,29 @@
         if (newWallet.id === 'chkpmppikmfpmijepmbgdkphhiegbkfp') {
           const connection = await newWallet.getConnection()
           detector.stopScan()
-          connection.connect(
-            (msg, sender) => {
-              console.log('------MSG')
-              console.log(sender)
-              console.log(msg)
-              console.log('------MSG-end')
-              if (msg.id === 1) {
-                //subscribe for accounts
-                connection.sendMessage({ id: 2, method: 'aepp.subscribe.address', params: { type: 'subscribe', value: 'current' }})
-                // TODO sign TX
-              }
-            }, // onMSg
-            (conn) => {
-              console.log('Disconnect ' + conn.connectionInfo.id)
-            }) // onDisconnect
+
           const name = 'MyAepp'
-          const version = 1
-          const network = 'mainnet'
-          connection.sendMessage({ id: 1, method: 'aepp.request.connect', params: { name, version, network }})
+          const aepp = await RpcAepp({
+            url: NODE_URL,
+            internalUrl: NODE_INTERNAL_URL,
+            compilerUrl: COMPILER_URL,
+            connection,
+            name,
+            onAddressChange (a) {
+              debugger
+            },
+            onDisconnect (a) {
+              debugger
+
+            },
+            onNetworkChange (a) {
+              debugger
+
+            }
+          })
+          await aepp.sendConnectRequest()
+          await aepp.subscribeAddress('subscribe', 'current')
+          console.log(await aepp.address())
         }
       })
     }
