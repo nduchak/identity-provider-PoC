@@ -8,8 +8,8 @@ import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-c
 
 const account =  MemoryAccount({
     keypair: {
-        secretKey: "YOUR_SECRET",
-        publicKey: "YOUR_PUBLIC"
+        secretKey: "e6a91d633c77cf5771329d3354b3bcef1bc5e032c43d70b6d35af923ce1eb74dcea7ade470c9f99d9d4e400880a86f1d49bb444b62f11a9ebb64bbcfeb73fef3",
+        publicKey: "ak_2a1j2Mk9YSmC1gioUq4PWRm3bsv887MbuRVwyv4KaUGoR1eiKi"
     }
 })
 
@@ -45,7 +45,7 @@ const accounts = [
     //         }
     //     }
     // })(),
-    // account
+    account
 ]
 //
 const postToContent = (data) => {
@@ -69,10 +69,9 @@ RpcWallet({
     internalUrl: NODE_INTERNAL_URL,
     compilerUrl: COMPILER_URL,
     // By default `ExtesionProvider` use first account as default account. You can change active account using `selectAccount (address)` function
-    accounts: [],
+    accounts,
     // Hook for sdk registration
     onConnection (aepp) {
-        debugger
         if (confirm(`Client ${aepp.info.name} with id ${aepp.id} want to connect`)) {
             aepp.acceptConnection()
         }
@@ -81,9 +80,13 @@ RpcWallet({
         debugger
     },
     onSubscription (aepp) {
-        debugger
         if (confirm(`Aepp ${aepp.info.name} with id ${aepp.id} want to subscribe for accounts`)) {
             aepp.allowSubscription()
+        }
+    },
+    onSign (aepp, action) {
+        if (confirm(`Aepp ${aepp.info.name} with id ${aepp.id} want to sign tx ${action.params.tx}`)) {
+            action.accept()
         }
     }
 }).then(wallet => {

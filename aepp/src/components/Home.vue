@@ -210,12 +210,15 @@
             },
             onNetworkChange (a) {
               debugger
-
             }
           })
+          // Send connection request
           await aepp.sendConnectRequest()
+          // Send subscribe address request
           await aepp.subscribeAddress('subscribe', 'current')
-          console.log(await aepp.address())
+          // Make spend tx
+          const res = await aepp.spend(123, await aepp.address())
+          debugger
         }
       })
     }
