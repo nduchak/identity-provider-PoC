@@ -20,5 +20,7 @@
     "write-file-webpack-plugin": "4.5.0",
     "webpack-cli": "^3.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@aeternity/aepp-sdk": "https://github.com/aeternity/aepp-sdk-js#feature/aex-2"
+  }
 }
