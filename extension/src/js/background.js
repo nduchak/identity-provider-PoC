@@ -71,17 +71,17 @@ RpcWallet({
     // By default `ExtesionProvider` use first account as default account. You can change active account using `selectAccount (address)` function
     accounts,
     // Hook for sdk registration
-    onConnection (aepp) {
+    onConnection (aepp, action) {
         if (confirm(`Client ${aepp.info.name} with id ${aepp.id} want to connect`)) {
-            aepp.acceptConnection()
+            action.accept()
         }
     },
     onDisconnect (port) {
         debugger
     },
-    onSubscription (aepp) {
+    onSubscription (aepp, action) {
         if (confirm(`Aepp ${aepp.info.name} with id ${aepp.id} want to subscribe for accounts`)) {
-            aepp.allowSubscription()
+            action.accept()
         }
     },
     onSign (aepp, action) {
