@@ -8,8 +8,8 @@ import BrowserRuntimeConnection from '@aeternity/aepp-sdk/es/utils/aepp-wallet-c
 
 const account =  MemoryAccount({
     keypair: {
-        secretKey: "e6a91d633c77cf5771329d3354b3bcef1bc5e032c43d70b6d35af923ce1eb74dcea7ade470c9f99d9d4e400880a86f1d49bb444b62f11a9ebb64bbcfeb73fef3",
-        publicKey: "ak_2a1j2Mk9YSmC1gioUq4PWRm3bsv887MbuRVwyv4KaUGoR1eiKi"
+        secretKey: "Pub",
+        publicKey: "Secret"
     }
 })
 
@@ -61,13 +61,12 @@ const NODE_URL = 'http://localhost:3013'
 const NODE_INTERNAL_URL = 'http://localhost:3113'
 const COMPILER_URL = 'https://compiler.aepps.com'
 
-setInterval(() => postToContent({ method: 'wallet.await.connection', params: { name: 'TestWAELLET', id: 'chkpmppikmfpmijepmbgdkphhiegbkfp', network: 'mainnet' }}), 1000)
-
 // Init extension stamp from sdk
 RpcWallet({
     url: NODE_URL,
     internalUrl: NODE_INTERNAL_URL,
     compilerUrl: COMPILER_URL,
+    name: 'ExtensionWallet',
     // By default `ExtesionProvider` use first account as default account. You can change active account using `selectAccount (address)` function
     accounts,
     // Hook for sdk registration
@@ -98,7 +97,8 @@ RpcWallet({
         wallet.addRpcClient(connection)
     })
     // Share wallet info with extensionId to the page
-    wallet.shareWalletInfo(postToContent)
+    debugger
+    setInterval(() => wallet.shareWalletInfo(postToContent), 5000)
 }).catch(err => {
     console.error(err)
 })
