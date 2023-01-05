@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.52",
-    "@babel/core": "7.0.0-beta.52",
+    "@babel/core": "7.20.12",
     "@babel/node": "7.0.0-beta.52",
     "@babel/plugin-proposal-export-default-from": "7.0.0-beta.52",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.52",
@@ -40,7 +40,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "glob-all": "^3.1.0",
     "html-webpack-harddisk-plugin": "^0.2.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.5",
     "precss": "^3.1.2",
